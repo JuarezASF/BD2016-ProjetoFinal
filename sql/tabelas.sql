@@ -642,3 +642,17 @@ CREATE TABLE AtendimentoEspecial (
 	guiaInterprete INTEGER NOT NULL,
 	FOREIGN KEY (inscricao) REFERENCES Inscrito (inscricao)
 );
+
+CREATE TABLE CadernoProva(
+	codigo INTEGER	PRIMARY KEY,
+	tipoConteudo VARCHAR (3) NOT NULL,
+	cor VARCHAR (10) NOT NULL
+);
+
+CREATE TABLE GabaritoQuestao(
+	codigoProva integer not null,
+	numeroQuestao integer not null,
+	gabarito char not null,
+	foreign key (codigoProva) primary key (codigoProva, numeroQuestao)
+);
+)
