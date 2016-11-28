@@ -7,6 +7,7 @@ def process(filename, output_filename, table_to_columns_list):
 
         for line in fp.readlines():
             line = line.replace("\r", "")
+            line = line.replace("\n", "")
             if line_counter == 0:
                 pass
             else:
