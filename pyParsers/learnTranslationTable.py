@@ -53,6 +53,15 @@ def save_to(data, file):
         json.dump(data, fp, indent=2, sort_keys=True)
 
 
+def generate_insert_sql_translate_table(output_filename, translation_map, table_name):
+    with open(output_filename, "w") as fp:
+        keys = translation_map.keys()
+        keys.sort()
+        for key in keys:
+            command = "insert into {} values({},{});".format(table_name, key, translation_map[key])
+            fp.write(command + "\n")
+
+
 if __name__ == "__main__":
 
     if len(sys.argv) != 2:
@@ -63,5 +72,8 @@ if __name__ == "__main__":
     municipio_mapping = mappings[0]
     uf_mapping = mappings[1]
 
-    save_to(municipio_mapping, "municipioMapping,json")
-    save_to(uf_mapping, "ufMapping,json")
+    save_to(municipio_mapping, "municipioMapping.json")
+    save_to(uf_mapping, "ufMapping.json")
+
+    generate_insert_sql_translate_table("municipioMapping.sql", municipio_mapping, "municipioCodeMapping")
+    generate_insert_sql_translate_table("ufMappingMapping.sql", uf_mapping, "ufCodeMapping")

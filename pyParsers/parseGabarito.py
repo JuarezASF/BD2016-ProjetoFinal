@@ -116,7 +116,7 @@ for filename in files:
             item_answer = gabarito[caderno][k]
             # print "\t{}:{}".format(k, item_answer)
             final_vector.append(item_answer)
-            outputFile.write("insert into GabaritoQuestao(codigoProva,numeroQuestao,gabarito) values({},{},{})\n".format(
+            outputFile.write("insert into GabaritoQuestao(codigoProva,numeroQuestao,gabarito) values({},{},{});\n".format(
                 cod[c], k, item_answer))
         c += 1
 
@@ -125,4 +125,3 @@ for filename in files:
     file_index += 1
 
 outputFile.close()
-
