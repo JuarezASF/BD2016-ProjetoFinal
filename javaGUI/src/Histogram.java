@@ -6,6 +6,8 @@ import com.jrefinery.data.DefaultPieDataset;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 /**
@@ -14,7 +16,7 @@ import java.awt.image.BufferedImage;
 public class Histogram {
     private JPanel panel;
     private JLabel imageLabel;
-    private JLabel imageLabelB;
+    private JComboBox selectedOption;
 
     public static void main(String[] args) {
 
@@ -30,23 +32,7 @@ public class Histogram {
 
 
     public Histogram() {
-        this.panel = new JPanel(new GridLayout(1, 2));
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-        pieDataset.setValue("JavaWorld", new Integer(75));
-        pieDataset.setValue("Other", new Integer(25));
-
-        JFreeChart chart = ChartFactory.createPieChart("Sample Pie Chart", // Title
-                pieDataset,
-                true
-        );
-
-        BufferedImage image = chart.createBufferedImage(500, 300);
-
-        JLabel imageLabel = new JLabel();
-        imageLabel.setIcon(new ImageIcon(image));
-
-        panel.add(imageLabel);
-
+        panel = new JPanel(new BorderLayout());
         String[] seriesNames = new String[]{"2001", "2002"};
         String[] categoryNames = new String[]{"First Quater",
                 "Second Quater"};
@@ -59,7 +45,7 @@ public class Histogram {
                 categoryNames,
                 categoryData);
 
-        JFreeChart chartB = ChartFactory.createVerticalBarChart3D
+        JFreeChart chart = ChartFactory.createVerticalBarChart3D
                 ("Sample Category Chart", // Title
                         "Quarters", // X-Axis label
                         "Sales", // Y-Axis label
@@ -67,12 +53,24 @@ public class Histogram {
                         true // Show legend
                 );
 
-        BufferedImage imageB = chartB.createBufferedImage(500, 300);
+        BufferedImage image = chart.createBufferedImage(500, 300);
 
-        imageLabelB = new JLabel();
-        imageLabelB.setIcon(new ImageIcon(imageB));
-        panel.add(imageLabelB);
+        imageLabel.setIcon(new ImageIcon(image));
 
+        selectedOption.setSelectedIndex(-1);
+        selectedOption.addItem("Operation 1");
+        selectedOption.addItem("Operation 2");
+
+
+        selectedOption.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        panel.add(selectedOption, BorderLayout.NORTH);
+        panel.add(imageLabel, BorderLayout.CENTER);
 
     }
 
