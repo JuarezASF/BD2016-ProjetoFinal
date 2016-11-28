@@ -1,4 +1,4 @@
-﻿/* Alunos:				                Matricula:
+﻿/* Alunos:				     Matricula:
 *  Ricardo Souza Rachaus		     14/0161244
 *  Juarez Aires Sampaio Filho
 * Cria tabelas referentes aos dados do ENEM 2013
@@ -17,25 +17,6 @@ CREATE TABLE Municipio (
 	codigoUF INTEGER NOT NULL,
 	FOREIGN KEY (codigoUF) REFERENCES UnidadeFederacao (codigo)
 );
-
--- Cria tabela Escola
-CREATE TABLE Escola (
-	codigo INTEGER PRIMARY KEY,
-	localizacao INTEGER NOT NULL,
-	situacaoFuncionamento INTEGER NOT NULL,
-	dependenciaAdministrava INTEGER NOT NULL
-);
-
--- Cria tabela Situa, referente ao local onde a escola se situa
-CREATE TABLE Situa (
-	codigoEscola INTEGER PRIMARY KEY,
-	codigoUF INTEGER NOT NULL,
-	codigoMunicipio INTEGER NOT NULL,
-	FOREIGN KEY (codigoEscola) REFERENCES Escola (codigo),
-	FOREIGN KEY (codigoUF) REFERENCES UnidadeFederacao (codigo),
-	FOREIGN KEY (codigoMunicipio) REFERENCES Municipio (codigo)
-);
-
 
 -- Cria tabela questionario, com as respostas do inscrito
 CREATE TABLE Questionario (
@@ -119,55 +100,31 @@ CREATE TABLE Questionario (
 	FOREIGN KEY (inscricao) REFERENCES Inscrito (inscricao)
 );
 
--- Cria tabela Prova
-CREATE TABLE Prova (
-	inscricao CHAR (13) PRIMARY KEY,
-	codigoUF INTEGER NOT NULL,
-	codigoMunicipio INTEGER NOT NULL,
-	idProvaCH INTEGER NOT NULL,
-	idProvaCN INTEGER NOT NULL,
-	idProvaMT INTEGER NOT NULL,
-	idProvaLC INTEGER NOT NULL,
-	statusRedacao INTEGER NOT NULL,
-	notaComp1 INTEGER NOT NULL,
-	notaComp2 INTEGER NOT NULL,
-	notaComp3 INTEGER NOT NULL,
-	notaComp4 INTEGER NOT NULL,
-	notaComp5 INTEGER NOT NULL,
-	notaRedacao INTEGER NOT NULL,
-	PresencaCH INTEGER NOT NULL,
-	PresencaCN INTEGER NOT NULL,
-	PresencaMT INTEGER NOT NULL,
-	PresencaLC INTEGER NOT NULL,
-	NotaCH INTEGER NOT NULL,
-	NotaCN INTEGER NOT NULL,
-	NotaMT INTEGER NOT NULL,
-	NotaLC INTEGER NOT NULL,
-	FOREIGN KEY (inscricao) REFERENCES Inscrito (inscricao),
-	FOREIGN KEY (codigoUF) REFERENCES UnidadeFederacao (codigo),
-	FOREIGN KEY (codigoMunicipio) REFERENCES Municipio (codigo)
-);
 
+-- Cria tabela CadernoProva com os dados das provas
 CREATE TABLE CadernoProva(
 	codigo INTEGER	PRIMARY KEY,
 	tipoConteudo VARCHAR (3) NOT NULL,
 	cor VARCHAR (10) NOT NULL
 );
 
+-- Cria tabela GabaritoQuestao, com o gabarito das provas
 CREATE TABLE GabaritoQuestao(
 	codigoProva integer not null,
-	numeroQuestao integer not null,
+	numeroQuestao char(3) not null,
 	gabarito char not null,
-	foreign key (codigoProva) primary key (codigoProva, numeroQuestao)
+	foreign key (codigoProva) REFERENCES CadernoProva (codigo),
+	primary key (codigoProva, numeroQuestao)
 );
 
+-- Cria tabela Aluno
 CREATE TABLE Aluno (
 	inscricao CHAR (13) PRIMARY KEY,
 	ano INTEGER NOT NULL,
 	codigoMunicipioResidencia INTEGER NOT NULL,
 	codigoUFResidencia INTEGER NOT NULL,
 	classeHospitalar INTEGER NOT NULL,
-	idade INTEGER NOT NULL,
+	idade INTEGER,
 	sexo CHAR (1) NOT NULL,
 	nacionalidade INTEGER NOT NULL,
 	codigoMunicipioNascimento INTEGER NOT NULL,
@@ -206,4 +163,18 @@ CREATE TABLE Aluno (
 	FOREIGN KEY (codigoUFResidencia) REFERENCES UnidadeFederacao (codigo),
 	FOREIGN KEY (codigoMunicipioNascimento) REFERENCES Municipio (codigo),
 	FOREIGN KEY (codigoUFNascimento) REFERENCES UnidadeFederacao (codigo)
+);
+
+-- Cria tabela Escola
+CREATE TABLE Escola (
+	codigoEscola INTEGER PRIMARY KEY,
+	codigoMunicipioEscola INTEGER NOT NULL,
+	codigoUFEscola INTEGER NOT NULL,
+	dependenciaAdministrativa INTEGER NOT NULL,
+	localizacaoEscola INTEGER NOT NULL,
+	situacaoFuncionamento INTEGER NOT NULL,
+	tipoEscola INTEGER NOT NULL,
+	tipoEnsino INTEGER NOT NULL,
+	FOREIGN KEY (codigoMunicipioEscola) REFERENCES Municipio (codigo),
+	FOREIGN KEY (codigoUFEscola) REFERENCES UnidadeFederacao (codigo)
 );
