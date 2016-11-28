@@ -35,6 +35,7 @@ public class Histogram {
         panel = new JPanel(new BorderLayout());
 
         selectedOption = new JComboBox();
+        imageLabel = new JLabel();
 
         selectedOption.addItem("Operation 1");
         selectedOption.addItem("Operation 2");
