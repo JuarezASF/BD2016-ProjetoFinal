@@ -18,9 +18,64 @@ CREATE TABLE Municipio (
 	FOREIGN KEY (codigoUF) REFERENCES UnidadeFederacao (codigo)
 );
 
--- Cria tabela questionario, com as respostas do inscrito
-CREATE TABLE Questionario (
-	inscricao CHAR (13) PRIMARY KEY,
+-- Cria tabela CadernoProva com os dados das provas
+CREATE TABLE CadernoProva(
+	codigo INTEGER	PRIMARY KEY,
+	tipoConteudo VARCHAR (3) NOT NULL,
+	cor VARCHAR (10) NOT NULL
+);
+
+-- Cria tabela GabaritoQuestao, com o gabarito das provas
+CREATE TABLE GabaritoQuestao(
+	codigoProva integer not null,
+	numeroQuestao char(3) not null,
+	gabarito char not null,
+	foreign key (codigoProva) REFERENCES CadernoProva (codigo),
+	primary key (codigoProva, numeroQuestao)
+);
+
+-- Cria tabela Aluno
+CREATE TABLE Aluno (
+	inscricao CHAR (12) PRIMARY KEY,
+	ano INTEGER NOT NULL,
+	codigoMunicipioResidencia INTEGER NOT NULL,
+	codigoUFResidencia INTEGER NOT NULL,
+	classeHospitalar INTEGER NOT NULL,
+	idade INTEGER,
+	sexo CHAR (1) NOT NULL,
+	nacionalidade INTEGER NOT NULL,
+	codigoMunicipioNascimento INTEGER NOT NULL,
+	codigoUFNascimento INTEGER NOT NULL,
+	conclusaoEnsinoMedio INTEGER NOT NULL,
+	anoConclusao INTEGER,
+	estadoCivil INTEGER NOT NULL,
+	corRaca INTEGER NOT NULL,
+	baixaVisao INTEGER NOT NULL,
+	cegueira INTEGER NOT NULL,
+	surdez INTEGER NOT NULL,
+	deficienciaAuditiva INTEGER NOT NULL,
+	surdoCegueira INTEGER NOT NULL,
+	deficienciaFisica INTEGER NOT NULL,
+	deficienciaMental INTEGER NOT NULL,
+	deficitAtencao INTEGER NOT NULL,
+	dislexia INTEGER NOT NULL,
+	gestante INTEGER NOT NULL,
+	lactante INTEGER NOT NULL,
+	idoso INTEGER NOT NULL,
+	autismo INTEGER NOT NULL,
+	sabatista INTEGER NOT NULL,
+	braille INTEGER NOT NULL,
+	ampliada24 INTEGER NOT NULL,
+	ampliada18 INTEGER NOT NULL,
+	ledor INTEGER NOT NULL,
+	acesso INTEGER NOT NULL,
+	transcricao INTEGER NOT NULL,
+	libras INTEGER NOT NULL,
+	leituraLabial INTEGER NOT NULL,
+	mesaCadeiraRodas INTEGER NOT NULL,
+	mesaCadeiraSeparada INTEGER NOT NULL,
+	apoioPerna INTEGER NOT NULL,
+	guiaInterprete INTEGER NOT NULL,
 	questao01 CHAR (2) NOT NULL,
 	questao02 CHAR (2) NOT NULL,
 	questao03 CHAR (2) NOT NULL,
@@ -97,68 +152,6 @@ CREATE TABLE Questionario (
 	questao74 CHAR (2) NOT NULL,
 	questao75 CHAR (2) NOT NULL,
 	questao76 CHAR (2) NOT NULL,
-	FOREIGN KEY (inscricao) REFERENCES Inscrito (inscricao)
-);
-
-
--- Cria tabela CadernoProva com os dados das provas
-CREATE TABLE CadernoProva(
-	codigo INTEGER	PRIMARY KEY,
-	tipoConteudo VARCHAR (3) NOT NULL,
-	cor VARCHAR (10) NOT NULL
-);
-
--- Cria tabela GabaritoQuestao, com o gabarito das provas
-CREATE TABLE GabaritoQuestao(
-	codigoProva integer not null,
-	numeroQuestao char(3) not null,
-	gabarito char not null,
-	foreign key (codigoProva) REFERENCES CadernoProva (codigo),
-	primary key (codigoProva, numeroQuestao)
-);
-
--- Cria tabela Aluno
-CREATE TABLE Aluno (
-	inscricao CHAR (13) PRIMARY KEY,
-	ano INTEGER NOT NULL,
-	codigoMunicipioResidencia INTEGER NOT NULL,
-	codigoUFResidencia INTEGER NOT NULL,
-	classeHospitalar INTEGER NOT NULL,
-	idade INTEGER,
-	sexo CHAR (1) NOT NULL,
-	nacionalidade INTEGER NOT NULL,
-	codigoMunicipioNascimento INTEGER NOT NULL,
-	codigoUFNascimento INTEGER NOT NULL,
-	conclusaoEnsinoMedio INTEGER NOT NULL,
-	anoConclusao INTEGER,
-	estadoCivil INTEGER NOT NULL,
-	corRaca INTEGER NOT NULL,
-	baixaVisao INTEGER NOT NULL,
-	cegueira INTEGER NOT NULL,
-	surdez INTEGER NOT NULL,
-	deficienciaAuditiva INTEGER NOT NULL,
-	surdoCegueira INTEGER NOT NULL,
-	deficienciaFisica INTEGER NOT NULL,
-	deficienciaMental INTEGER NOT NULL,
-	deficitAtencao INTEGER NOT NULL,
-	dislexia INTEGER NOT NULL,
-	gestante INTEGER NOT NULL,
-	lactante INTEGER NOT NULL,
-	idoso INTEGER NOT NULL,
-	autismo INTEGER NOT NULL,
-	sabatista INTEGER NOT NULL,
-	braille INTEGER NOT NULL,
-	ampliada24 INTEGER NOT NULL,
-	ampliada18 INTEGER NOT NULL,
-	ledor INTEGER NOT NULL,
-	acesso INTEGER NOT NULL,
-	transcricao INTEGER NOT NULL,
-	libras INTEGER NOT NULL,
-	leituraLabial INTEGER NOT NULL,
-	mesaCadeiraRodas INTEGER NOT NULL,
-	mesaCadeiraSeparada INTEGER NOT NULL,
-	apoioPerna INTEGER NOT NULL,
-	guiaInterprete INTEGER NOT NULL,
 	FOREIGN KEY (codigoMunicipioResidencia) REFERENCES Municipio (codigo),
 	FOREIGN KEY (codigoUFResidencia) REFERENCES UnidadeFederacao (codigo),
 	FOREIGN KEY (codigoMunicipioNascimento) REFERENCES Municipio (codigo),
