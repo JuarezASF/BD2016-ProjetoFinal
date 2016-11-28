@@ -6,6 +6,7 @@ def process(filename, output_filename, table_to_columns_list):
         line_counter = 0
 
         for line in fp.readlines():
+            line = line.replace("\r", "")
             if line_counter == 0:
                 pass
             else:
@@ -23,10 +24,12 @@ def process(filename, output_filename, table_to_columns_list):
                             columns_data.append(fields[k])
 
                     command = "insert into {} values (".format(table)
-                    for d in columns_data:
-                        command += "{},".format(d)
-                    command = command[:len(command) - 1]
-                    command += ");"
+                    for cc in range(len(columns_data)):
+                        d = columns_data[cc]
+                        if cc == len(columns_data) - 1:
+                            command += "{});".format(d if len(d) > 0 else "NONE")
+                        else:
+                            command += "{},".format(d if len(d) > 0 else "NONE")
 
                     output_fp.write(command + "\n")
 
