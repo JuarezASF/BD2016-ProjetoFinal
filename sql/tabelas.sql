@@ -655,4 +655,3 @@ CREATE TABLE GabaritoQuestao(
 	gabarito char not null,
 	foreign key (codigoProva) primary key (codigoProva, numeroQuestao)
 );
-)

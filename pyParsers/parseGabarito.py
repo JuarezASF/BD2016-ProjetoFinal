@@ -68,6 +68,13 @@ codigos = [
 files = [baseDir + "/" + f for f in names]
 
 file_index = 0
+
+outputFileName = "insertGabarito.sql"
+
+print 'writing output to:', outputFileName
+outputFile = open(outputFileName, "w")
+
+
 for filename in files:
     print filename
     gabarito = dict()
@@ -99,17 +106,23 @@ for filename in files:
     for caderno in sorted(gabarito.keys()):
         print "caderno:", caderno
         print cod[c]
-        c += 1
         chaves = [x for x in gabarito[caderno].keys()]
         chaves.sort(cmp=compare)
 
         final_vector = list()
 
+
         for k in chaves:
             item_answer = gabarito[caderno][k]
             # print "\t{}:{}".format(k, item_answer)
             final_vector.append(item_answer)
-            print "{},{},{}".format(cod[c], k, item_answer)
+            outputFile.write("insert into GabaritoQuestao(codigoProva,numeroQuestao,gabarito) values({},{},{})\n".format(
+                cod[c], k, item_answer))
+        c += 1
+
 
         print "\t", final_vector
     file_index += 1
+
+outputFile.close()
+
